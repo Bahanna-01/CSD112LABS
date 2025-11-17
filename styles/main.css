@@ -138,6 +138,8 @@ img {
   display: block;
   margin: 20px auto;
   border-radius: 8px;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Style footer with background and spacing */
@@ -170,10 +172,10 @@ a[href="#top"] {
   z-index: 1000;
 }
 
-#back-to-top-container a[href="#top"]:hover {
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
+#back-to-top-container a[href="#top"] {
+  transition: transform 200ms ease-in-out;
 }
+
 
 /* Flex layout for image gallery */
 .gallery {
@@ -359,7 +361,7 @@ ol {
 }
 
 .bio {
-  column-count: 1;
+  column-width: 13em;
 }
 
 .bio img {
@@ -469,7 +471,7 @@ footer {
 /* Make the gallery container a grid */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   /* Four equal-width columns */
   gap: 10px;
   /* Space between grid items */
@@ -505,14 +507,13 @@ footer {
 }
 
 /* Add hover effect to gallery links */
-.gallery a:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
+.gallery a {
+  transition: transform 200ms ease-in-out;
 }
 
 /* Make only links inside .bio block-level and positionable */
 .bio a {
-  display: block;
+  display: inline-block;
   position: relative;
 }
 
@@ -520,8 +521,160 @@ footer {
 .paperclip {
   background: none;
   box-shadow: none;
-  width: 5%;
+  width: 20%;
   position: absolute;
   top: 0;
   right: 0;
+}
+
+@media (max-width: 450px) {
+  .gallery .col-span-2 {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Hide table headers and footers */
+  #making-a-table thead,
+  #making-a-table tfoot,
+  #making-a-table th {
+    display: none;
+  }
+
+  /* Make each table cell behave like a block */
+  #making-a-table td {
+    display: block;
+    padding: 0 1rem;
+  }
+
+  /* Ensure the caption appears at the top */
+  #making-a-table caption {
+    caption-side: top;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+  }
+
+  /* Style the first cell in each row */
+  #making-a-table td:first-of-type {
+    padding-top: 0.3em;
+    font-weight: bold;
+  }
+
+  /* Style the last cell in each row */
+  #making-a-table td:last-of-type {
+    padding-bottom: 0.3em;
+    font-style: italic;
+    font-size: 0.8em;
+    position: relative;
+  }
+
+  /* Add " hrs/wk" after the last cell's content */
+  #making-a-table td:last-of-type::after {
+    content: " hrs/wk";
+  }
+}
+
+@media (max-width: 800px) {
+  /* Stack the favourites container vertically */
+  .favourites {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Reset the order of tab labels so each appears above its content */
+  .favourites > label {
+    order: 0;
+    width: 100%;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 0.5em;
+  }
+
+  /* Ensure tab content fills the container and looks clean */
+  .favourites label + div,
+  .favourites input:checked + label + div {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}
+
+@media (max-width: 700px) {
+  /* nav layout */
+  header nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 0;
+    overflow: hidden;
+    transition: height 200ms ease-in-out;
+  }
+
+  header nav a {
+    padding-top: 0.5em;
+    border-top: none;
+  }
+
+  header nav a:hover {
+    border-top: none;
+    text-decoration: underline;
+  }
+
+  #menu-toggle,
+.sandwich-icon {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .sandwich-icon {
+    display: block;
+    width: 40px;
+    height: 25px;
+    border-top: 5px solid #b35c7a;
+    cursor: pointer;
+    margin: 1em auto;
+    position: relative;
+  }
+
+  .sandwich-icon::before,
+  .sandwich-icon::after {
+    content: "";
+    display: block;
+    width: 40px;
+    border-top: 5px solid #b35c7a;
+    position: absolute;
+    left: 0;
+  }
+
+  .sandwich-icon::before {
+    top: 5px;
+  }
+
+  .sandwich-icon::after {
+    top: 15px;
+  }
+
+  header nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 0;
+    overflow: hidden;
+    transition: height 200ms ease-in-out;
+  }
+
+  #menu-toggle:checked + .sandwich-icon + ul {
+    height: 16em;
+  }
+
+  header nav a {
+    padding-top: 0.5em;
+    border-top: none;
+  }
+
+  header nav a:hover {
+    border-top: none;
+    text-decoration: underline;
+  }
+}
 }
